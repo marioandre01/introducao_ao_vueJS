@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Componentes com Vue</title>
+        <script src="https://unpkg.com/vue"></script>
+    </head>
+
+    <body>
+
+        <div id="app">
+            <gui-titulo v-bind:titulo="meuTitulo"></gui-titulo>
+            <input type="text" v-model="meuTitulo">
+            <gui-tabela v-bind:titulos="['Nome', 'Descrição', 'Link']" v-bind:registros="registros"></gui-tabela>
+            
+            <p v-once>{{meuTitulo}}</p>
+            <p v-html="html"></p>
+            
+        </div>
+            
+
+        <script type="text/javascript">
+
+            Vue.component('gui-titulo', {
+                props: ['titulo'],
+                template: '<h2>{{ titulo }}</h2>'
+            });
+
+            Vue.component('gui-tabela', {
+                props: ['titulos', 'registros'],
+                template:'<table style="width:100%">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th v-for="titulo in titulos">{{ titulo }}</th>'+
+                        
+                    '</tr>'+
+                '</thead>'+  
+                '<tbody>'+
+                    '<tr v-for="registro in registros">'+
+                        '<td v-for="item in registro">{{item}}</td>'+
+                    '</tr>'+
+                '</tbody>'+
+                '</table>'
+            });
+
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    meuTitulo:'Essse é o Titulo',
+                    registros:[
+                        {titulo:'Título1', descricao:'descrição1', link:'Link1'},
+                        {titulo:'Título2', descrição:'descrição2', link:'Link2'},
+                        {titulo:'Título3', descrição:'descrição3', link:'Link3'}
+                    ],
+                    html:'<a href="#">Esse é um link</a>'
+                }
+            });
+                    
+        </script>
+    </body>
+</html>
